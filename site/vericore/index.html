@@ -1,18 +1,135 @@
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VeriCore - The Compliance Layer for AI</title>
-    <style>
-        :root {
-            --bg: #09090b;
-            --text: #fafafa;
-            --accent: #6d5aed;
-        }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 40px; }
-        h1 { color: var(--accent); }
-    </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriCore - The Compliance Layer for AI</title>
+<meta name="description" content="VeriCore adds a cryptographic audit layer that makes every AI decision traceable, verifiable, and EU AI Act compliant.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090b;--bg-2:#111114;--bg-3:#18181b;--surface:#1e1e22;--border:#27272a;--border-hover:#3f3f46;--text:#fafafa;--text-2:#a1a1aa;--text-3:#71717a;--accent:#6d5aed;--accent-2:#8b7cf6;--accent-dim:rgba(109,90,237,0.12);--green:#22c55e;--green-dim:rgba(34,197,94,0.12);--red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);--radius:12px;--radius-sm:8px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(9,9,11,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-weight:800;font-size:18px;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px}
+.nav-brand .dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{color:var(--text-2);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:white;padding:8px 20px;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;transition:all 0.2s}
+.nav-cta:hover{background:var(--accent-2);transform:translateY(-1px)}
+.hero{padding:160px 40px 100px;max-width:1200px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-dim);border:1px solid rgba(109,90,237,0.25);color:var(--accent-2);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:600;margin-bottom:32px}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:24px}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent-2),#c084fc,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:20px;color:var(--text-2);max-width:640px;margin:0 auto 40px;line-height:1.7}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:white;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:all 0.25s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent-2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(109,90,237,0.3)}
+.btn-secondary{background:var(--surface);color:var(--text);padding:14px 32px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--border);transition:all 0.25s}
+.btn-secondary:hover{border-color:var(--border-hover);background:var(--bg-3)}
+.statement{text-align:center;padding:80px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-2)}
+.statement p{font-size:clamp(20px,3vw,28px);font-weight:600;color:var(--text-2);max-width:800px;margin:0 auto;letter-spacing:-0.5px}
+.statement p em{color:var(--text);font-style:normal;border-bottom:2px solid var(--accent)}
+section{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent-2);margin-bottom:16px}
+.section-title{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:20px}
+.section-desc{font-size:17px;color:var(--text-2);max-width:600px;margin-bottom:48px}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.p-card{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;transition:border-color 0.3s}
+.p-card:hover{border-color:var(--border-hover)}
+.p-card .icon{font-size:28px;margin-bottom:16px}
+.p-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.p-card p{color:var(--text-2);font-size:14px;line-height:1.7}
+.pipeline{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:16px}
+.pipe-step{flex:1;min-width:160px;background:var(--bg-2);border:1px solid var(--border);padding:28px 20px;text-align:center;position:relative}
+.pipe-step:first-child{border-radius:var(--radius) 0 0 var(--radius)}
+.pipe-step:last-child{border-radius:0 var(--radius) var(--radius) 0}
+.pipe-step .step-num{font-size:11px;font-weight:700;color:var(--accent-2);margin-bottom:10px;text-transform:uppercase;letter-spacing:1.5px}
+.pipe-step .step-icon{font-size:28px;margin-bottom:10px}
+.pipe-step h4{font-size:15px;font-weight:700;margin-bottom:6px}
+.pipe-step p{font-size:12px;color:var(--text-3)}
+.pipe-step::after{content:'\2192';position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--accent);z-index:1;font-weight:700}
+.pipe-step:last-child::after{display:none}
+.demo-terminal{background:#0c0c0f;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:13px}
+.term-header{background:var(--bg-3);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-dot.r{background:#ef4444}.term-dot.y{background:#f59e0b}.term-dot.g{background:#22c55e}
+.term-title{margin-left:12px;font-size:12px;color:var(--text-3)}
+.term-body{padding:20px;line-height:1.8;max-height:420px;overflow-y:auto}
+.term-body .line{white-space:pre}
+.t-muted{color:var(--text-3)}.t-green{color:var(--green)}.t-red{color:var(--red)}.t-blue{color:var(--accent-2)}.t-hash{color:var(--text-3);font-size:11px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.metric-card{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center}
+.metric-value{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.metric-label{font-size:13px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;font-weight:600}
+.chain-visual{display:flex;gap:0;overflow-x:auto;padding:20px 0}
+.chain-block{min-width:200px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;position:relative;margin-right:40px;transition:border-color 0.3s}
+.chain-block:hover{border-color:var(--accent)}
+.chain-block::after{content:'\1F517';position:absolute;right:-30px;top:50%;transform:translateY(-50%);font-size:16px}
+.chain-block:last-child::after{display:none}
+.chain-block:last-child{margin-right:0}
+.cb-index{font-size:10px;font-weight:700;color:var(--accent-2);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.cb-event{font-size:13px;font-weight:700;margin-bottom:4px}
+.cb-hash{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-3);word-break:break-all}
+.use-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.use-card{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;transition:all 0.3s}
+.use-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.use-card .tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px}
+.tag-energy{background:var(--green-dim);color:var(--green)}
+.tag-building{background:var(--blue-dim);color:var(--blue)}
+.tag-data{background:rgba(245,158,11,0.12);color:var(--amber)}
+.use-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.use-card p{font-size:14px;color:var(--text-2);line-height:1.7}
+.compliance-bar{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:40px}
+.comp-badge{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 18px;font-size:13px;font-weight:600}
+.comp-badge .check{color:var(--green)}
+.bottom-cta{text-align:center;padding:100px 40px;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);border-top:1px solid var(--border)}
+.bottom-cta h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.bottom-cta p{font-size:18px;color:var(--text-2);margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+footer{border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--text-3);font-size:13px}
+footer a{color:var(--text-2);text-decoration:none}footer a:hover{color:var(--text)}
+@media(max-width:768px){nav{padding:0 20px}.nav-links a:not(.nav-cta){display:none}.hero,section{padding-left:20px;padding-right:20px}.pipeline{flex-direction:column}.pipe-step{border-radius:var(--radius-sm)!important}}
+</style>
 </head>
 <body>
-    <h1>VeriCore landing page is active.</h1>
-    <p>Everything is set up correctly.</p>
-</body></html>
+<nav><div class="nav-brand"><div class="dot"></div> VeriCore</div><div class="nav-links"><a href="#problem">Problem</a><a href="#how">How it Works</a><a href="#demo">Live Demo</a><a href="#cases">Use Cases</a><a href="#contact" class="nav-cta">Build a Consortium &#8594;</a></div></nav>
+<section class="hero"><div class="hero-badge">&#9889; EU AI Act Compliant by Design</div><h1>We don't build AI.<br><span class="grad">We make AI accountable.</span></h1><p class="hero-sub">VeriCore adds a cryptographic compliance layer to any AI system. Every decision is audited, sealed, and verifiable - in real time.</p><div class="hero-ctas"><a href="#demo" class="btn-primary">See Live Demo &#8595;</a><a href="#contact" class="btn-secondary">Join the Consortium</a></div></section>
+<div class="statement"><p>"Every AI decision should be <em>traceable</em>, <em>explainable</em>, and <em>cryptographically provable</em>."</p></div>
+<section id="problem"><div class="section-label">The Problem</div><h2 class="section-title">AI decisions are invisible.</h2><p class="section-desc">Most AI systems operate as black boxes. When something goes wrong, there is no audit trail, no accountability, and no legal compliance.</p><div class="problem-grid"><div class="p-card"><div class="icon">&#9888;&#65039;</div><h3>No Audit Trail</h3><p>AI makes thousands of decisions daily. Without an immutable record, there's no way to verify what happened, when, or why.</p></div><div class="p-card"><div class="icon">&#9878;&#65039;</div><h3>EU AI Act Liability</h3><p>Starting August 2026, high-risk AI systems must provide decision traceability. Non-compliance means fines up to 35M EUR or 7% of revenue.</p></div><div class="p-card"><div class="icon">&#128275;</div><h3>Tamper Risk</h3><p>Logs can be altered. Databases can be modified. Without cryptographic proof, audit records have no legal weight.</p></div></div></section>
+<section id="how"><div class="section-label">How It Works</div><h2 class="section-title">Five-stage deterministic pipeline.</h2><p class="section-desc">VeriCore sits between your AI and the real world. Rules decide. Cryptography proves.</p><div class="pipeline"><div class="pipe-step"><div class="step-num">Step 1</div><div class="step-icon">&#129302;</div><h4>AI Proposes</h4><p>Any AI system sends a decision proposal</p></div><div class="pipe-step"><div class="step-num">Step 2</div><div class="step-icon">&#128679;</div><h4>Hard Gates</h4><p>Binary safety checks: PII, budget, compliance</p></div><div class="pipe-step"><div class="step-num">Step 3</div><div class="step-icon">&#128202;</div><h4>Sigma Score</h4><p>5-dimension weighted composite score</p></div><div class="pipe-step"><div class="step-num">Step 4</div><div class="step-icon">&#9878;&#65039;</div><h4>Verdict</h4><p>APPROVE, REJECT, or ESCALATE to human</p></div><div class="pipe-step"><div class="step-num">Step 5</div><div class="step-icon">&#128272;</div><h4>Witness Seal</h4><p>SHA-256 linked chain - tamper-evident</p></div></div></section>
+<section id="demo"><div class="section-label">Live Demo</div><h2 class="section-title">See it in action.</h2><p class="section-desc">A simulated HVAC energy system where VeriCore audits every AI decision in real time.</p><div class="demo-terminal"><div class="term-header"><div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div><span class="term-title">vericore_demo.py - HVAC Energy Pilot</span></div><div class="term-body" id="demo-body"><div class="line t-blue">========================================================================</div><div class="line t-blue">  VeriCore Energy Pilot Demo</div><div class="line t-blue">  AI advises. Rules decide. Cryptography proves.</div><div class="line t-blue">  FEAM Server: CONNECTED</div><div class="line t-blue">========================================================================</div><div class="line"></div><div class="line">[1] HVAC-0001</div><div class="line t-muted">  Sensor  : T=31.2C  H=58.3%  OCC=47  CO2=890  Price=0.38EUR</div><div class="line">  AI      : increase_cooling</div><div class="line">  Gates   : PASS</div><div class="line">  Sigma   : 0.8124</div><div class="line t-green">  Verdict : APPROVED (sigma_pass)</div><div class="line t-hash">  Witness : a7f3c2d891e4b6... [feam_api]</div><div class="line"></div><div class="line">[2] HVAC-0002</div><div class="line t-muted">  Sensor  : T=32.8C  H=62.1%  OCC=88  CO2=1420  Price=0.51EUR</div><div class="line">  AI      : reduce_load</div><div class="line t-red">  Gates   : ['SAFETY_RISK']</div><div class="line">  Sigma   : 0.3291</div><div class="line t-red">  Verdict : REJECTED (hard_gate:SAFETY_RISK)</div><div class="line t-hash">  Witness : 5cd88472f1a9c3... [feam_api]</div><div class="line"></div><div class="line">[3] HVAC-0003</div><div class="line t-muted">  Sensor  : T=24.1C  H=45.7%  OCC=12  CO2=1180  Price=0.22EUR</div><div class="line">  AI      : increase_ventilation</div><div class="line">  Gates   : PASS</div><div class="line">  Sigma   : 0.8540</div><div class="line t-green">  Verdict : APPROVED (sigma_pass)</div><div class="line t-hash">  Witness : 92e1b4f7d083a5... [feam_api]</div><div class="line"></div><div class="line">[4] HVAC-0004</div><div class="line t-muted">  Sensor  : T=26.3C  H=55.0%  OCC=62  CO2=1480  Price=0.35EUR</div><div class="line">  AI      : maintain</div><div class="line t-red">  Gates   : ['AIR_QUALITY_VIOLATION']</div><div class="line">  Sigma   : 0.4017</div><div class="line t-red">  Verdict : REJECTED (hard_gate:AIR_QUALITY_VIOLATION)</div><div class="line t-hash">  Witness : d4a1f8e2c7b093... [feam_api]</div></div></div><div style="margin-top:40px"><h3 style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-2)">&#128279; Witness Chain (SHA-256 Linked List)</h3><div class="chain-visual"><div class="chain-block"><div class="cb-index">Block #0</div><div class="cb-event" style="color:var(--accent-2)">GENESIS</div><div class="cb-hash">c3095a9f7e12...</div></div><div class="chain-block"><div class="cb-index">Block #1</div><div class="cb-event" style="color:var(--green)">APPROVED</div><div class="cb-hash">a7f3c2d891e4...</div></div><div class="chain-block"><div class="cb-index">Block #2</div><div class="cb-event" style="color:var(--red)">REJECTED</div><div class="cb-hash">5cd88472f1a9...</div></div><div class="chain-block"><div class="cb-index">Block #3</div><div class="cb-event" style="color:var(--green)">APPROVED</div><div class="cb-hash">92e1b4f7d083...</div></div><div class="chain-block"><div class="cb-index">Block #4</div><div class="cb-event" style="color:var(--red)">REJECTED</div><div class="cb-hash">d4a1f8e2c7b0...</div></div></div></div></section>
+<section><div class="section-label">Performance</div><h2 class="section-title">Built for production.</h2><div class="metrics-grid"><div class="metric-card"><div class="metric-value" style="color:var(--green)">&lt;10ms</div><div class="metric-label">Decision Latency</div></div><div class="metric-card"><div class="metric-value" style="color:var(--accent-2)">100%</div><div class="metric-label">Traceability</div></div><div class="metric-card"><div class="metric-value" style="color:var(--amber)">0</div><div class="metric-label">LLM Dependencies</div></div><div class="metric-card"><div class="metric-value" style="color:var(--blue)">SHA-256</div><div class="metric-label">Tamper Evidence</div></div></div><div class="compliance-bar"><div class="comp-badge"><span class="check">&#10003;</span> EU AI Act Art. 14</div><div class="comp-badge"><span class="check">&#10003;</span> Human Oversight</div><div class="comp-badge"><span class="check">&#10003;</span> Decision Logging</div><div class="comp-badge"><span class="check">&#10003;</span> Kill Switch (Art. 14.4)</div><div class="comp-badge"><span class="check">&#10003;</span> GDPR Compatible</div></div></section>
+<section id="cases"><div class="section-label">Use Cases</div><h2 class="section-title">Where AI needs accountability.</h2><p class="section-desc">VeriCore works with any AI system that makes consequential decisions.</p><div class="use-grid"><div class="use-card"><div class="tag tag-energy">Energy</div><h3>Smart Grid Optimization</h3><p>Audit AI decisions in energy load balancing, peak shaving, and dynamic pricing. Every kilowatt decision is sealed and verifiable.</p></div><div class="use-card"><div class="tag tag-building">Smart Building</div><h3>HVAC &amp; Facility Management</h3><p>Monitor and audit AI-driven climate control, occupancy optimization, and energy management in commercial buildings.</p></div><div class="use-card"><div class="tag tag-data">Data Center</div><h3>Infrastructure Governance</h3><p>Ensure AI-driven capacity planning, cooling optimization, and workload distribution meet compliance requirements.</p></div></div></section>
+<section><div class="section-label">Architecture</div><h2 class="section-title">Deterministic by design.</h2><p class="section-desc">No LLM in the decision loop. Rules are the law. AI is the advisor.</p><div class="demo-terminal" style="max-width:700px"><div class="term-header"><div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div><span class="term-title">architecture.txt</span></div><div class="term-body" style="font-size:12px"><pre style="color:var(--text-2);margin:0">
++---------------+
+|  AI System    |  Any AI (LLM, ML, Rules)
+|  (Advisor)    |
++-------+-------+
+        | proposal
+        v
++--------------------------------------+
+|         VeriCore Pipeline            |
+|                                      |
+|  +----------+  +---------+  +-----+ |
+|  |Hard Gates|  | Sigma   |  |Verd.| |
+|  |(binary)  |  |(scored) |  |     | |
+|  +----------+  +---------+  +--+--+ |
+|                                |     |
+|  +-----------------------------v---+ |
+|  |    Witness Chain (SHA-256)      | |
+|  |    append-only, tamper-evident  | |
+|  +---------------------------------+ |
++--------------------------------------+
+        |
+        v
++----------------+
+|  Dashboard     |  Human operator oversight
+|  (Ring 1)      |
++----------------+
+</pre></div></div></section>
+<div class="bottom-cta" id="contact"><h2>Let's build the future of<br>AI accountability together.</h2><p>We're looking for consortium partners, pilot customers, and research collaborators across Europe.</p><div class="hero-ctas"><a href="mailto:erdem@5eyapi.com.tr" class="btn-primary">Contact Us &#8594;</a><a href="https://feam.co" class="btn-secondary">FEAM.co Platform</a></div><div style="margin-top:40px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap"><div style="color:var(--text-3);font-size:13px"><strong style="color:var(--text-2)">5E Yapi Sistemleri</strong> - Istanbul, Turkey</div><div style="color:var(--text-3);font-size:13px"><strong style="color:var(--text-2)">FEAM.co</strong> - AI Governance Platform</div></div></div>
+<footer><p>&copy; 2026 VeriCore by FEAM.co - 5E Yapi Sistemleri Yonetimi Ltd. Sti.</p><p style="margin-top:8px"><a href="https://github.com/feam-co/VERICORE-">GitHub</a> &middot; <a href="https://feam.co">FEAM.co</a> &middot; <a href="https://5eyapi.com.tr">5E Yapi</a></p></footer>
+</body>
+</html>
