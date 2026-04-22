@@ -2,22 +2,22 @@ name: Deploy to Natro (hakikatmekanigi.com)
 
 on:
   push:
-      branches: [main]
-        woflow_dispatch:
+    branches: [main]
+  workflow_dispatch:
 
-        jobs:
-          deploy:
-              runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-                  steps:
-                      - name: Checkout code
-                            uses: actions/checkout@v4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-                                - name: Deploy via FTP to Natro
-                                      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-                                            with:
-                                                    server: ${{ secrets.FTP_SERVER }}
-                                                            username: ${{ secrets.FTP_USERNAME }}
-                                                                    password: ${{ secrets.FTP_PASSWORD }}
-                                                                            server-dir: /public_html/
-                                                                                    local-dir: ./site/
+    - name: Deploy via FTP to Natro
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /public_html/
+        local-dir: ./site/
