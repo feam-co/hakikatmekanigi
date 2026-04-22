@@ -3,7 +3,7 @@ name: Deploy to Natro (hakikatmekanigi.com)
 on:
   push:
       branches: [main]
-        workflow_dispatch:
+        woflow_dispatch:
 
         jobs:
           deploy:
