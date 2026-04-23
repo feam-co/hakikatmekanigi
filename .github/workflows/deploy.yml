@@ -1,4 +1,4 @@
-name: Deploy to Natro (hakikatmekanigi.com)
+name: Deploy to Natro (feam.co)
 
 on:
   push:
@@ -19,5 +19,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/
+        server-dir: /
         local-dir: ./site/
