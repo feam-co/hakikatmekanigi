@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriCore Interactive Demo — FEAM.co</title>
+<meta name="description" content="Try VeriCore's deterministic compliance engine live. See how AI decisions are audited, scored, and cryptographically sealed in real time.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],mono:['JetBrains Mono','monospace']},colors:{slate:{950:'#020617'}}}}}
+</script>
+<style>
+body{background-color:#020617;color:#e2e8f0}
+.glass{background:rgba(15,23,42,0.6);backdrop-filter:blur(12px);border:1px solid #1e293b}
+.mono{font-family:'JetBrains Mono',monospace;font-size:0.9em}
+.mizan-dial{transition:transform 1.5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes pulse-emerald{0%,100%{opacity:1}50%{opacity:0.4}}
+.status-live{animation:pulse-emerald 2s infinite}
+.step-active{border-color:#10b981 !important;box-shadow:0 0 15px rgba(16,185,129,0.3)}
+.step-complete{border-color:#1e293b !important;background-color:rgba(30,41,59,0.5)}
+.back-link{position:fixed;top:16px;left:16px;z-index:100;display:flex;align-items:center;gap:8px;color:#9d9db5;text-decoration:none;font-size:13px;font-weight:600;padding:8px 16px;background:rgba(6,6,10,0.8);backdrop-filter:blur(12px);border:1px solid #2a2a35;border-radius:8px;transition:all .2s}
+.back-link:hover{color:#f5f5f7;border-color:#7c5cfc}
+.back-link svg{width:16px;height:16px}
+</style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+<a href="/" class="back-link">
+<svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#7c5cfc" stroke-width="2"/><circle cx="14" cy="14" r="5" fill="#7c5cfc"/></svg>
+FEAM.co
+</a>
+
+<header class="flex items-center justify-between pb-8 border-b border-slate-800 mb-8 pt-2">
+  <div>
+    <div class="flex items-center gap-3">
+      <div class="w-3 h-3 rounded-full bg-emerald-500 status-live"></div>
+      <div class="text-xs tracking-[0.4em] text-slate-500 uppercase font-bold">VeriCore Engine</div>
+    </div>
+    <h1 class="text-3xl font-extrabold tracking-tighter mt-1 text-white">Compliance Simulation</h1>
+    <p class="text-slate-400 mt-1">Interactive demo &mdash; see how VeriCore audits AI decisions in real time</p>
+  </div>
+  <div class="glass rounded-2xl px-5 py-3 text-right">
+    <div class="text-xs text-slate-500 uppercase tracking-widest">Witness Chain Height</div>
+    <div id="worm-height" class="text-2xl font-black mono text-emerald-400">1,204,567</div>
+    <div class="text-xs text-slate-600 mt-1">Cryptographically Sealed Blocks</div>
+  </div>
+</header>
+
+<main class="grid grid-cols-1 xl:grid-cols-[1.2fr,0.8fr] gap-8">
+  <section class="space-y-8">
+
+    <!-- STEP 1: INPUT -->
+    <div id="step-1" class="glass rounded-3xl p-6 border-slate-800 transition-all duration-300">
+      <div class="flex items-center gap-4 mb-5">
+        <div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center font-bold text-slate-500">1</div>
+        <h2 class="text-xl font-bold text-white">AI Proposal &amp; Intent Scanner</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+        <button onclick="selectScenario('safe')" class="p-4 rounded-xl border border-slate-700 bg-slate-900/50 hover:border-emerald-500 text-left transition">
+          <div class="font-semibold text-emerald-400">Scenario A: Clean Operation</div>
+          <p class="text-sm text-slate-400 mt-1">"Summarize Q3 market analysis and trend report."</p>
+        </button>
+        <button onclick="selectScenario('risky')" class="p-4 rounded-xl border border-slate-700 bg-slate-900/50 hover:border-rose-500 text-left transition">
+          <div class="font-semibold text-rose-400">Scenario B: PII Violation</div>
+          <p class="text-sm text-slate-400 mt-1">"Get customer risk profile for IBAN TR12 3456..."</p>
+        </button>
+        <button onclick="selectScenario('conditional')" class="p-4 rounded-xl border border-slate-700 bg-slate-900/50 hover:border-amber-500 text-left transition col-span-1 md:col-span-2">
+          <div class="font-semibold text-amber-400">Scenario C: Grey Zone (Human Escalation)</div>
+          <p class="text-sm text-slate-400 mt-1">"Credit application: External score 0.72, internal benefit medium. What is the approval status?"</p>
+        </button>
+      </div>
+      <div class="relative">
+        <input id="prompt-input" type="text" placeholder="Type your own prompt or select a scenario..." class="w-full rounded-xl bg-black border border-slate-700 px-5 py-4 mono text-emerald-300 outline-none focus:border-emerald-500">
+        <button onclick="startSimulation()" class="absolute right-3 top-3 px-5 py-2 rounded-lg bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-500 transition">Run Audit</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: FUSION ENGINE -->
+    <div id="step-2" class="glass rounded-3xl p-6 border-slate-800 transition-all duration-300 opacity-60">
+      <div class="flex items-center gap-4 mb-5">
+        <div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center font-bold text-slate-500">2</div>
+        <h2 class="text-xl font-bold text-white">Fusion Engine: Gate Check, Scoring &amp; Memory</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bg-black/30 rounded-2xl p-5 border border-slate-800">
+          <div class="text-xs uppercase tracking-widest text-slate-500 mb-2">PII Scanner</div>
+          <div id="phi-status" class="text-xl font-semibold text-slate-600">Waiting</div>
+          <p id="phi-detail" class="text-sm text-slate-400 mt-1">Prompt not yet scanned.</p>
+          <div id="phi-violations" class="mt-3 flex flex-wrap gap-2 hidden"></div>
+        </div>
+        <div class="bg-black/30 rounded-2xl p-5 border border-slate-800">
+          <div class="text-xs uppercase tracking-widest text-slate-500 mb-2">Semantic Memory</div>
+          <div id="memory-status" class="text-xl font-semibold text-slate-600">Searching</div>
+          <p id="memory-detail" class="text-sm text-slate-400 mt-1">No precedent search yet.</p>
+          <div id="memory-precedents" class="mt-3 space-y-2 hidden"></div>
+        </div>
+        <div class="bg-black/30 rounded-2xl p-5 border border-slate-800">
+          <div class="text-xs uppercase tracking-widest text-slate-500 mb-2">Witness Pre-Seal</div>
+          <div id="worm-pre-status" class="text-xl font-semibold text-slate-600 mono">PRE-WORM</div>
+          <p id="worm-pre-detail" class="text-xs text-slate-500 mt-1 mono break-all">Waiting...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: SIGMA & GOVERNANCE -->
+    <div id="step-3" class="glass rounded-3xl p-6 border-slate-800 transition-all duration-300 opacity-60">
+      <div class="flex items-center gap-4 mb-5">
+        <div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center font-bold text-slate-500">3</div>
+        <h2 class="text-xl font-bold text-white">Sigma Engine &amp; Governance Layer</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="bg-black/30 rounded-2xl p-5 border border-slate-800 flex items-center gap-5">
+          <div class="w-24 h-24 flex-shrink-0 relative">
+            <svg viewBox="0 0 36 36" class="w-full h-full text-slate-700">
+              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="100, 100"/>
+              <path id="sigma-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1e293b" stroke-width="3" stroke-dasharray="0, 100" class="mizan-dial"/>
+            </svg>
+            <div id="sigma-value" class="absolute inset-0 flex items-center justify-center text-3xl font-black text-slate-600 mono">--</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest text-slate-500 mb-1">Sigma (Compliance) Score</div>
+            <div id="sigma-verdict-label" class="text-xl font-bold text-slate-600">NOT SCORED</div>
+            <p id="sigma-metrics" class="text-sm text-slate-400 mt-1 mono">B:? | T:? | C:? | W:?</p>
+          </div>
+        </div>
+        <div id="governance-block" class="bg-black/30 rounded-2xl p-5 border border-slate-800">
+          <div class="text-xs uppercase tracking-widest text-slate-500 mb-2">Human Oversight Layer</div>
+          <div id="gov-status" class="text-xl font-semibold text-slate-600">Inactive</div>
+          <p id="gov-detail" class="text-sm text-slate-400 mt-1">No human escalation needed.</p>
+          <div id="gov-vote-viz" class="mt-3 flex items-center gap-1 hidden">
+            <div class="w-full h-2 rounded bg-slate-700 overflow-hidden flex">
+              <div id="vote-approve" class="h-full bg-emerald-500" style="width:0%"></div>
+              <div id="vote-reject" class="h-full bg-rose-500" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="space-y-8">
+    <!-- VERDICT -->
+    <div id="result-panel" class="glass rounded-3xl p-8 border-slate-800 text-center transition-all duration-300 opacity-60">
+      <div class="text-xs uppercase tracking-widest text-slate-500 mb-3">Final Verdict</div>
+      <div id="final-verdict" class="text-5xl font-black tracking-tighter text-slate-700">PENDING</div>
+      <p id="final-reason" class="text-slate-400 mt-3 text-sm leading-relaxed">Simulation not started.</p>
+      <div class="mt-8 grid grid-cols-2 gap-4">
+        <div class="rounded-xl border border-slate-800 bg-black/30 p-4">
+          <div class="text-xs text-slate-500">Witness Score</div>
+          <div id="final-witness-score" class="text-2xl font-black mono text-slate-600">--</div>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-black/30 p-4">
+          <div class="text-xs text-slate-500">Economic Impact</div>
+          <div id="final-tokenomics" class="text-2xl font-black mono text-slate-600">--</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORM LEDGER STREAM -->
+    <div class="glass rounded-3xl p-6 border-slate-800">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-xl font-bold text-white">Live Witness Chain</h2>
+        <span class="text-xs uppercase tracking-widest text-emerald-400">Live</span>
+      </div>
+      <div id="worm-stream" class="space-y-3 max-h-[500px] overflow-auto pr-2 mono text-xs text-slate-500">
+        <div>[SYS] VeriCore Compliance Engine Genesis Booted. [HASH:000000...]</div>
+        <div>[MEMORY] 10,456 Precedents loaded into semantic space.</div>
+        <div>[SYS] Governance Engine active. Minimum threshold: 0.70</div>
+      </div>
+    </div>
+
+    <!-- BACK LINK -->
+    <div class="text-center pt-4">
+      <p class="text-xs text-slate-600 mb-3">This is a simulation of the VeriCore compliance pipeline.<br>No real data is processed.</p>
+      <a href="/vericore/" class="text-sm text-purple-400 hover:text-purple-300 font-semibold">Learn more about VeriCore &rarr;</a>
+    </div>
+  </aside>
+</main>
+
+<script>
+const FEAM_CONFIG={threshold:0.70,baseWitness:2.5};
+const SCENARIOS={
+  safe:{text:"Summarize Q3 market analysis and trend report.",metrics:{fayda:0.85,seffaflik:0.95,sozlesme:0.80,israf:0.10},hasCritical:false,context:"GDPR",expectedVerdict:"APPROVED",precedent:{id:"CASE-Q2",similarity:0.88,verdict:"APPROVED"}},
+  risky:{text:"Get customer risk profile for IBAN TR12 3456...",metrics:{fayda:0.25,seffaflik:0.95,sozlesme:0.80,israf:0.75},hasCritical:true,violations:["SSN:*****34","IBAN:TR12..."],context:"GDPR",expectedVerdict:"REJECTED",precedent:{id:"CASE-FRAUD-1",similarity:0.92,verdict:"REJECTED"}},
+  conditional:{text:"Credit application: External score 0.72, internal benefit medium.",metrics:{fayda:0.65,seffaflik:0.85,sozlesme:0.70,israf:0.30},hasCritical:false,context:"GDPR",expectedVerdict:"CONDITIONAL",precedent:null,votes:{approve:2.1,reject:1.2,result:"APPROVED"}}
+};
+let currentScenario=null;let wormHeight=1204567;
+const uid=()=>'CASE-'+Date.now().toString().substring(8)+'-'+Math.random().toString(36).substring(2,5).toUpperCase();
+const generateHash=()=>[...Array(64)].map(()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
+const delay=(ms)=>new Promise(res=>setTimeout(res,ms));
+function updateWormHeight(){wormHeight++;document.getElementById('worm-height').innerText=wormHeight.toLocaleString('en-US')}
+function logToWorm(msg,color='text-slate-500'){const s=document.getElementById('worm-stream');const e=document.createElement('div');e.className=color;e.innerText=`[${new Date().toISOString().substring(11,19)}] ${msg}`;s.prepend(e);s.scrollTop=0;updateWormHeight()}
+function setActiveStep(stepId){document.querySelectorAll('main > section > div, #result-panel').forEach(el=>el.classList.add('opacity-60'));document.querySelectorAll('main > section > div, #result-panel').forEach(el=>el.classList.remove('step-active','step-complete'));for(let i=1;i<=stepId;i++){const el=document.getElementById(`step-${i}`);if(el)el.classList.remove('opacity-60');if(i<stepId&&el)el.classList.add('step-complete')}const current=document.getElementById(`step-${stepId}`);if(current)current.classList.add('step-active');if(stepId===4)document.getElementById('result-panel').classList.remove('opacity-60')}
+function selectScenario(id){currentScenario=SCENARIOS[id];document.getElementById('prompt-input').value=currentScenario.text;resetUI();logToWorm(`Scenario selected: ${id.toUpperCase()}`,'text-emerald-400')}
+async function startSimulation(){
+  const prompt=document.getElementById('prompt-input').value;
+  if(!prompt)return alert("Select a scenario or type a prompt first.");
+  const actionId=uid();resetUI();setActiveStep(1);
+  logToWorm(`New Case initiated: ${actionId}`,'text-white');await delay(800);
+  setActiveStep(2);logToWorm(`${actionId} -> Fusion Engine started.`);
+  document.getElementById('worm-pre-status').innerText='PRE-Signed';
+  document.getElementById('worm-pre-status').classList.add('text-amber-300');
+  const preHash=generateHash();
+  document.getElementById('worm-pre-detail').innerText=preHash.substring(0,32)+'...';
+  logToWorm(`${actionId} -> PRE-Signed. Hash: ${preHash.substring(0,10)}...`,'text-amber-300');await delay(1000);
+  const phiStatus=document.getElementById('phi-status');const phiDetail=document.getElementById('phi-detail');const phiViolations=document.getElementById('phi-violations');
+  if(currentScenario&&currentScenario.hasCritical){phiStatus.innerText='VIOLATION DETECTED';phiStatus.classList.add('text-rose-400');phiDetail.innerText='Critical PII data masked.';phiViolations.classList.remove('hidden');phiViolations.innerHTML=currentScenario.violations.map(v=>`<span class="px-2 py-1 rounded bg-rose-950 border border-rose-800 text-rose-300 mono text-xs">${v}</span>`).join('');logToWorm(`${actionId} -> PII Scanner: CRITICAL VIOLATIONS DETECTED.`,'text-rose-400')}else{phiStatus.innerText='CLEAN';phiStatus.classList.add('text-emerald-400');phiDetail.innerText='No critical PII found.';logToWorm(`${actionId} -> PII Scanner: CLEAR.`,'text-emerald-400')}
+  await delay(1000);
+  const memStatus=document.getElementById('memory-status');const memDetail=document.getElementById('memory-detail');const memPrecedents=document.getElementById('memory-precedents');
+  if(currentScenario&&currentScenario.precedent){const p=currentScenario.precedent;memStatus.innerText='PRECEDENT FOUND';memStatus.classList.add('text-purple-400');memDetail.innerText=`Semantic similarity: ${Math.round(p.similarity*100)}%`;memPrecedents.classList.remove('hidden');memPrecedents.innerHTML=`<div class="p-2 rounded bg-purple-950 border border-purple-800 text-purple-300 mono text-xs flex justify-between"><span>${p.id}</span><span>${p.verdict}</span></div>`;logToWorm(`${actionId} -> Memory: Precedent ${p.id} found (${Math.round(p.similarity*100)}%).`,'text-purple-400')}else{memStatus.innerText='NO PRECEDENT';memStatus.classList.add('text-slate-400');memDetail.innerText='No strong precedent found.';logToWorm(`${actionId} -> Memory: No strong precedent.`,'text-slate-400')}
+  await delay(1200);setActiveStep(3);
+  const scenario=currentScenario||{metrics:{fayda:0.5,seffaflik:0.5,sozlesme:0.5,israf:0.0},hasCritical:false};
+  logToWorm(`${actionId} -> Sigma Engine calculating...`);await delay(1500);
+  let rawSigma=((scenario.metrics.fayda*0.3)+(scenario.metrics.seffaflik*0.3)+(scenario.metrics.sozlesme*0.2))-(scenario.metrics.israf*0.2);
+  if(scenario.hasCritical)rawSigma*=0.1;
+  const finalSigma=Math.max(0,Math.min(1,rawSigma)).toFixed(4);
+  const arc=document.getElementById('sigma-arc');const sigmaVal=document.getElementById('sigma-value');const verdictLabel=document.getElementById('sigma-verdict-label');const metricsLabel=document.getElementById('sigma-metrics');
+  arc.setAttribute('stroke-dasharray',(finalSigma*100)+', 100');
+  let sigmaColor='text-slate-400';let calcVerdict='REJECTED';
+  if(scenario.hasCritical){sigmaColor='text-rose-400';calcVerdict='VETO_BY_PII'}else if(finalSigma>=FEAM_CONFIG.threshold){sigmaColor='text-emerald-400';calcVerdict='APPROVED'}else if(finalSigma>=0.50){sigmaColor='text-amber-400';calcVerdict='CONDITIONAL'}else{sigmaColor='text-rose-400';calcVerdict='REJECTED'}
+  arc.setAttribute('stroke',sigmaColor.includes('emerald')?'#10b981':sigmaColor.includes('rose')?'#f43f5e':'#f59e0b');
+  sigmaVal.innerText=finalSigma;sigmaVal.className='absolute inset-0 flex items-center justify-center text-3xl font-black mono '+sigmaColor;
+  verdictLabel.innerText=calcVerdict;verdictLabel.className='text-xl font-bold '+sigmaColor;
+  metricsLabel.innerText=`B:${scenario.metrics.fayda.toFixed(2)} | T:${scenario.metrics.seffaflik.toFixed(2)} | C:${scenario.metrics.sozlesme.toFixed(2)} | W:${scenario.metrics.israf.toFixed(2)}`;
+  logToWorm(`${actionId} -> Sigma: ${finalSigma} Verdict: ${calcVerdict}`,sigmaColor);
+  const govStatus=document.getElementById('gov-status');const govDetail=document.getElementById('gov-detail');const govVoteViz=document.getElementById('gov-vote-viz');
+  if(calcVerdict==='CONDITIONAL'){logToWorm(`${actionId} -> Grey Zone. Escalating to Human Oversight...`,'text-amber-400');govStatus.innerText='HUMAN REVIEW ACTIVE';govStatus.classList.add('text-amber-400','status-live');govDetail.innerText='Merit-based voting in progress.';await delay(1500);if(scenario.votes){logToWorm(`${actionId} -> Human Consensus: ${scenario.votes.result}.`);govStatus.classList.remove('status-live');govStatus.innerText=`DECISION: ${scenario.votes.result}`;govStatus.classList.remove('text-amber-400');govStatus.classList.add(scenario.votes.result==='APPROVED'?'text-emerald-400':'text-rose-400');govDetail.innerText='Majority consensus reached.';calcVerdict=scenario.votes.result;govVoteViz.classList.remove('hidden');document.getElementById('vote-approve').style.width='65%';document.getElementById('vote-reject').style.width='35%'}}else if(calcVerdict==='VETO_BY_PII'){govStatus.innerText='AUTO-VETO';govStatus.classList.add('text-rose-400');govDetail.innerText='Critical PII detected. Human review bypassed.'}
+  await delay(1000);setActiveStep(4);logToWorm(`${actionId} -> Finalizing Verdict...`);
+  const fv=document.getElementById('final-verdict');const fr=document.getElementById('final-reason');const fw=document.getElementById('final-witness-score');const ft=document.getElementById('final-tokenomics');
+  fv.innerText=calcVerdict;fv.className='text-5xl font-black tracking-tighter '+(calcVerdict==='APPROVED'?'text-emerald-400':'text-rose-400');
+  let reason="Sigma score above compliance threshold.";
+  if(calcVerdict==='REJECTED')reason="Sigma score below acceptable risk threshold.";
+  if(calcVerdict==='VETO_BY_PII')reason="System auto-vetoed due to critical PII in prompt.";
+  if(scenario.votes&&calcVerdict==='APPROVED')reason="Grey zone resolved by human majority vote.";
+  fr.innerText=reason;
+  let witness=(1.0*0.25)+(1.0*0.25)+((scenario.precedent?0.9:0.7)*0.2)+((scenario.votes?0.6:1.0)*0.2)+((calcVerdict==='APPROVED'?0.9:0.4)*0.1);
+  fw.innerText=witness.toFixed(4);fw.className='text-2xl font-black mono text-purple-300';
+  if(calcVerdict==='APPROVED'){const mint=(FEAM_CONFIG.baseWitness*witness).toFixed(3);ft.innerText=`+${mint} MZN`;ft.classList.add('text-emerald-400');logToWorm(`${actionId} -> APPROVED. Minting ${mint} MZN.`,'text-emerald-400')}else{ft.innerText='BURN';ft.classList.add('text-rose-400');logToWorm(`${actionId} -> REJECTED/VETO. Fee burned.`,'text-rose-400')}
+  logToWorm(`${actionId} -> Finalizing AUTO-WORM Sign.`);await delay(800);
+  const autoHash=generateHash();
+  logToWorm(`${actionId} -> AUTO-Signed & Sealed. Hash: ${autoHash.substring(0,16)}...`,'text-emerald-400');
+  logToWorm(`${actionId} -> Case Closed. Permanently Witnessed.`,'text-white');
+}
+function resetUI(){
+  document.getElementById('phi-status').className='text-xl font-semibold text-slate-600';document.getElementById('phi-detail').innerText='Prompt not yet scanned.';document.getElementById('phi-violations').classList.add('hidden');
+  document.getElementById('memory-status').className='text-xl font-semibold text-slate-600';document.getElementById('memory-detail').innerText='No precedent search yet.';document.getElementById('memory-precedents').classList.add('hidden');
+  document.getElementById('worm-pre-status').className='text-xl font-semibold text-slate-600 mono';document.getElementById('worm-pre-status').innerText='PRE-WORM';document.getElementById('worm-pre-detail').innerText='Waiting...';
+  document.getElementById('sigma-arc').setAttribute('stroke-dasharray','0, 100');document.getElementById('sigma-arc').setAttribute('stroke','#1e293b');
+  document.getElementById('sigma-value').innerText='--';document.getElementById('sigma-value').className='absolute inset-0 flex items-center justify-center text-3xl font-black text-slate-600 mono';
+  document.getElementById('sigma-verdict-label').innerText='NOT SCORED';document.getElementById('sigma-verdict-label').className='text-xl font-bold text-slate-600';
+  document.getElementById('sigma-metrics').innerText='B:? | T:? | C:? | W:?';
+  document.getElementById('gov-status').className='text-xl font-semibold text-slate-600';document.getElementById('gov-status').innerText='Inactive';document.getElementById('gov-detail').innerText='No human escalation needed.';document.getElementById('gov-vote-viz').classList.add('hidden');document.getElementById('vote-approve').style.width='0%';document.getElementById('vote-reject').style.width='0%';
+  document.getElementById('final-verdict').innerText='PENDING';document.getElementById('final-verdict').className='text-5xl font-black tracking-tighter text-slate-700';document.getElementById('final-reason').innerText='Simulation not started.';
+  document.getElementById('final-witness-score').innerText='--';document.getElementById('final-witness-score').className='text-2xl font-black mono text-slate-600';
+  document.getElementById('final-tokenomics').innerText='--';document.getElementById('final-tokenomics').className='text-2xl font-black mono text-slate-600';
+  document.querySelectorAll('main > section > div, #result-panel').forEach(el=>el.classList.remove('step-active','step-complete'));
+  document.querySelectorAll('main > section > div, #result-panel').forEach(el=>el.classList.add('opacity-60'));
+  document.getElementById('step-1').classList.remove('opacity-60');
+}
+</script>
+</body>
+</html>

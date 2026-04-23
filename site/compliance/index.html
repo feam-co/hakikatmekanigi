@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriCore Compliance — EU AI Act Oversight | FEAM.co</title>
+<meta name="description" content="See how VeriCore enforces EU AI Act compliance: Article 12 logging, Article 14 human oversight, kill-switch controls, and cryptographic audit trails.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06060a;--bg-2:#0d0d12;--surface:#1a1a21;--border:#2a2a35;--border-hover:#3a3a48;--text:#f5f5f7;--text-2:#9d9db5;--text-3:#6b6b80;--accent:#7c5cfc;--accent-2:#9b7dff;--accent-glow:rgba(124,92,252,0.15);--green:#34d399;--green-dim:rgba(52,211,153,0.1);--red:#f87171;--red-dim:rgba(248,113,113,0.1);--amber:#fbbf24;--amber-dim:rgba(251,191,36,0.1);--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.1);--radius:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,10,0.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,48px)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo svg{width:28px;height:28px}
+.nav-logo span{font-weight:800;font-size:18px;color:var(--text);letter-spacing:-0.5px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text-2);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent-2)}
+.nav-cta{background:var(--accent);color:#fff!important;padding:8px 20px;border-radius:8px;font-weight:600}
+.container{max-width:1100px;margin:0 auto;padding:120px 24px 80px}
+h1{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-2px;margin-bottom:16px}
+h1 .grad{background:linear-gradient(135deg,var(--accent-2),#c084fc,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{font-size:18px;color:var(--text-2);max-width:700px;margin-bottom:48px;line-height:1.7}
+h2{font-size:24px;font-weight:800;margin:48px 0 20px;letter-spacing:-0.5px}
+.eu-tag{display:inline-flex;align-items:center;gap:6px;background:var(--blue-dim);border:1px solid rgba(96,165,250,0.2);color:var(--blue);padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;margin-left:8px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.ctrl{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;transition:border-color .3s}
+.ctrl:hover{border-color:var(--border-hover)}
+.ctrl .icon{font-size:36px;margin-bottom:12px}
+.ctrl h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.ctrl p{font-size:12px;color:var(--text-3)}
+.ctrl-pause{border-left:3px solid var(--amber)}
+.ctrl-resume{border-left:3px solid var(--green)}
+.ctrl-kill{border-left:3px solid var(--red)}
+.ctrl-status{border-left:3px solid var(--blue)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.metric .num{font-size:32px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.metric .label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
+.articles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.article-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:border-color .3s}
+.article-card:hover{border-color:var(--accent)}
+.article-card .ref{font-size:11px;font-weight:700;color:var(--accent-2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.article-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.article-card p{font-size:13px;color:var(--text-2);line-height:1.6}
+.article-card .check{color:var(--green);font-weight:800;margin-top:8px;font-size:13px}
+.cta-box{background:var(--accent-glow);border:1px solid rgba(124,92,252,0.2);border-radius:var(--radius);padding:40px;text-align:center;margin:48px 0}
+.cta-box h3{font-size:22px;font-weight:800;margin-bottom:12px}
+.cta-box p{color:var(--text-2);font-size:14px;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-box a{display:inline-block;background:var(--accent);color:#fff;padding:14px 32px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;transition:all .2s}
+.cta-box a:hover{background:var(--accent-2);transform:translateY(-2px)}
+footer{border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-3);font-size:12px}
+footer a{color:var(--text-2);text-decoration:none}
+@media(max-width:768px){.grid4,.articles,.metrics{grid-template-columns:1fr}.nav-links a:not(.nav-cta){display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#7c5cfc" stroke-width="2"/><circle cx="14" cy="14" r="5" fill="#7c5cfc"/><line x1="14" y1="2" x2="14" y2="9" stroke="#7c5cfc" stroke-width="2"/><line x1="14" y1="19" x2="14" y2="26" stroke="#7c5cfc" stroke-width="2"/><line x1="2" y1="14" x2="9" y2="14" stroke="#7c5cfc" stroke-width="2"/><line x1="19" y1="14" x2="26" y2="14" stroke="#7c5cfc" stroke-width="2"/></svg>
+    <span>FEAM.co</span>
+  </a>
+  <div class="nav-links">
+    <a href="/vericore/">Product</a>
+    <a href="/demo/">Demo</a>
+    <a href="/compliance/" class="active">Compliance</a>
+    <a href="/#consortium">Consortium</a>
+    <a href="mailto:erdem@feam.co" class="nav-cta">Partner With Us &rarr;</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <h1>EU AI Act<br><span class="grad">Compliance Built In</span></h1>
+  <p class="subtitle">VeriCore doesn't bolt compliance on top — it's architecturally enforced. Every AI decision passes through deterministic hard gates, gets scored by a 5-axis Sigma engine, and is cryptographically sealed in an immutable Witness Chain.</p>
+
+  <h2>🛡️ Human Oversight Controls <span class="eu-tag">🇪🇺 Article 14</span></h2>
+  <p style="color:var(--text-2);font-size:14px;margin-bottom:20px">The EU AI Act requires that high-risk AI systems can be paused, overridden, or stopped by a human operator at any time. VeriCore implements this as a core architectural feature.</p>
+
+  <div class="grid4">
+    <div class="ctrl ctrl-pause">
+      <div class="icon">⏸️</div>
+      <h3>PAUSE</h3>
+      <p>Suspend all AI decisions — queue incoming requests until human resumes</p>
+    </div>
+    <div class="ctrl ctrl-resume">
+      <div class="icon">▶️</div>
+      <h3>RESUME</h3>
+      <p>Re-enable autonomous decisions — all paused items flow through pipeline</p>
+    </div>
+    <div class="ctrl ctrl-kill">
+      <div class="icon">⛔</div>
+      <h3>KILL SWITCH</h3>
+      <p>Emergency stop — irreversible, requires full system restart. Logged permanently</p>
+    </div>
+    <div class="ctrl ctrl-status">
+      <div class="icon">👤</div>
+      <h3>OVERRIDE</h3>
+      <p>Human operator can override any AI verdict with documented reasoning</p>
+    </div>
+  </div>
+
+  <h2>📊 Compliance Metrics (Pilot Data)</h2>
+  <div class="metrics">
+    <div class="metric"><div class="num" style="color:var(--text)">1,247</div><div class="label">Total AI Decisions</div></div>
+    <div class="metric"><div class="num" style="color:var(--green)">1,198</div><div class="label">Auto-Approved</div></div>
+    <div class="metric"><div class="num" style="color:var(--amber)">42</div><div class="label">Escalated to Human</div></div>
+    <div class="metric"><div class="num" style="color:var(--red)">7</div><div class="label">Rejected by Gate</div></div>
+  </div>
+
+  <h2>✅ Article-by-Article Compliance</h2>
+  <div class="articles">
+    <div class="article-card">
+      <div class="ref">Article 9 — Risk Management</div>
+      <h4>5-Axis Sigma Scoring</h4>
+      <p>Every decision is scored across benefit, transparency, contract adherence, force majeure, and waste prevention. Configurable thresholds per deployment.</p>
+      <div class="check">✓ Implemented — sigma_engine.py</div>
+    </div>
+    <div class="article-card">
+      <div class="ref">Article 12 — Record-Keeping</div>
+      <h4>WORM Witness Chain</h4>
+      <p>SHA-256 hash chain with ECDSA P-256 signatures. Write-Once-Read-Many — no record can be altered after creation. Full audit trail from day one.</p>
+      <div class="check">✓ Implemented — witness_chain.py</div>
+    </div>
+    <div class="article-card">
+      <div class="ref">Article 13 — Transparency</div>
+      <h4>Full Decision Explainability</h4>
+      <p>Each verdict includes risk score breakdown, model used, sector context, and the exact rule that triggered approval, escalation, or rejection.</p>
+      <div class="check">✓ Implemented — verdict_engine.py</div>
+    </div>
+    <div class="article-card">
+      <div class="ref">Article 14 — Human Oversight</div>
+      <h4>Structured Escalation Loop</h4>
+      <p>Grey-zone decisions (Sigma &lt; 0.50) are automatically routed to human operators. Override decisions are logged in the same chain with operator identity.</p>
+      <div class="check">✓ Implemented — hard_gates.py</div>
+    </div>
+    <div class="article-card">
+      <div class="ref">Article 15 — Accuracy & Robustness</div>
+      <h4>Deterministic Rule Engine</h4>
+      <p>No probabilistic drift. The rule engine produces identical outputs for identical inputs. LLM serves as advisor only — never as decision maker.</p>
+      <div class="check">✓ Implemented — thresholds.py (SSOT)</div>
+    </div>
+    <div class="article-card">
+      <div class="ref">KVKK / GDPR</div>
+      <h4>Zero PII Storage</h4>
+      <p>VeriCore stores only cryptographic hashes and anonymized metadata. Personal data stays on the client side. Dual-custody architecture by design.</p>
+      <div class="check">✓ Architecture-enforced</div>
+    </div>
+  </div>
+
+  <h2>🔐 Cryptographic Proof Example</h2>
+  <div style="background:#0f172a;border-radius:12px;padding:24px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;color:#94a3b8;margin:16px 0">
+    <span style="color:#94a3b8">Decision Hash:</span><br>
+    <span style="color:#86efac">SHA-256: e7f8a9b0c1d2f3e4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8</span><br><br>
+    <span style="color:#94a3b8">Previous Block:</span><br>
+    <span style="color:#86efac">SHA-256: d5e6f7a8b9c0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6</span><br><br>
+    <span style="color:#94a3b8">Verdict:</span> <span style="color:#fca5a5">REJECTED</span> — <span style="color:#fbbf24">"Personal pricing detected — PII usage violates KVKK"</span><br>
+    <span style="color:#94a3b8">Verification:</span> <span style="color:#86efac">✓ VALID — Chain integrity confirmed</span>
+  </div>
+
+  <div class="cta-box">
+    <h3>See a Full Audit Report</h3>
+    <p>View a sample compliance audit output generated by VeriCore for an e-commerce dynamic pricing module.</p>
+    <a href="/report-sample/">View Sample Report →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 FEAM.co / 5E Yapı Sistemleri Ltd. — Teknopark İstanbul &nbsp;|&nbsp; <a href="/">Home</a> &nbsp;|&nbsp; <a href="/vericore/">VeriCore</a> &nbsp;|&nbsp; <a href="/demo/">Demo</a> &nbsp;|&nbsp; <a href="/witness/">Witness Chain</a></p>
+</footer>
+
+</body>
+</html>
