@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FEAM | Dijital Şahitlik Daveti</title>
-  <meta name="description" content="FEAM OS dijital şahitlik daveti" />
+  <meta name="description" content="FEAM OS dijital şahitlik daveti — ticarette güvenin dijital olarak görünür kılınmış hali" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,6 @@
       --accent: #0f172a;
       --glow: rgba(255,255,255,0.75);
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -33,270 +32,58 @@
         linear-gradient(180deg, #fcfdff 0%, #f8fafc 100%);
       min-height: 100vh;
     }
-
-    .shell {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 28px 20px 60px;
-    }
-
+    .shell { width:100%; max-width:1120px; margin:0 auto; padding:28px 20px 60px; }
     .glass {
       background: var(--card);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
       border: 1px solid var(--line);
-      box-shadow:
-        0 10px 30px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255,255,255,0.55);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.55);
     }
-
-    .fade-up {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp .8s cubic-bezier(.22,1,.36,1) forwards;
-    }
-
-    .fade-up.delay-1 { animation-delay: .08s; }
-    .fade-up.delay-2 { animation-delay: .16s; }
-    .fade-up.delay-3 { animation-delay: .24s; }
-    .fade-up.delay-4 { animation-delay: .32s; }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .wordmark {
-      letter-spacing: .34em;
-      text-transform: uppercase;
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: 600;
-    }
-
-    .hero-title {
-      font-size: clamp(2.25rem, 4vw, 4.4rem);
-      line-height: 1.04;
-      letter-spacing: -0.04em;
-      font-weight: 600;
-    }
-
-    .hero-copy {
-      color: var(--muted);
-      font-size: clamp(1rem, 1.35vw, 1.12rem);
-      line-height: 1.9;
-      max-width: 760px;
-    }
-
-    .hairline {
-      width: 72px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(15,23,42,.18), transparent);
-      margin: 22px auto 0;
-    }
-
-    .quote {
-      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-      line-height: 1.9;
-      color: #1e293b;
-      font-weight: 400;
-    }
-
-    .muted { color: var(--muted); }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.62);
-      border-radius: 999px;
-      padding: 10px 14px;
-      color: #475569;
-      font-size: 12px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #0f172a;
-      opacity: .55;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      border-radius: 26px;
-      padding: 28px;
-    }
-
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.08rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: .98rem;
-    }
-
-    .flow {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .flow-step {
-      border-radius: 24px;
-      padding: 26px;
-      position: relative;
-      overflow: hidden;
-      transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease, background .35s ease;
-    }
-
-    .flow-step.active {
-      transform: translateY(-2px);
-      border-color: rgba(15,23,42,.18);
-      box-shadow: 0 16px 36px rgba(15,23,42,.08);
-      background: rgba(255,255,255,.92);
-    }
-
-    .flow-no {
-      font-size: .78rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: #94a3b8;
-      margin-bottom: 16px;
-      font-weight: 700;
-    }
-
-    .flow-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .flow-copy {
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: .97rem;
-    }
-
-    .flow-hash {
-      margin-top: 18px;
-      font-size: .8rem;
-      color: #64748b;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-      word-break: break-all;
-      min-height: 42px;
-    }
-
-    .cta-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 34px;
-    }
-
-    .btn-primary, .btn-secondary {
-      border: 0;
-      border-radius: 999px;
-      padding: 14px 22px;
-      font-size: .96rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform .25s ease, opacity .25s ease, box-shadow .25s ease, background .25s ease;
-    }
-
-    .btn-primary {
-      background: #0f172a;
-      color: white;
-      box-shadow: 0 10px 25px rgba(15,23,42,.12);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,.72);
-      color: #334155;
-      border: 1px solid var(--line);
-    }
-
-    .btn-primary:hover, .btn-secondary:hover { transform: translateY(-1px); }
-
-    .result-box {
-      border-radius: 28px;
-      padding: 30px;
-    }
-
-    .result-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .result-copy {
-      color: var(--muted);
-      line-height: 1.9;
-      margin-top: 8px;
-      font-size: 1rem;
-    }
-
-    .seal {
-      margin-top: 22px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.82);
-      border-radius: 999px;
-      padding: 12px 16px;
-      color: #0f172a;
-      font-size: .92rem;
-      font-weight: 600;
-    }
-
-    .seal-mark {
-      width: 11px;
-      height: 11px;
-      border-radius: 999px;
-      background: #0f172a;
-      box-shadow: 0 0 0 8px rgba(15,23,42,.06);
-    }
-
-    .footer-note {
-      text-align: center;
-      color: #94a3b8;
-      font-size: .92rem;
-      line-height: 1.9;
-      margin-top: 34px;
-    }
-
-    @media (max-width: 900px) {
-      .grid-3, .flow { grid-template-columns: 1fr; }
-      .shell { padding: 22px 16px 44px; }
-      .card, .flow-step, .result-box { padding: 24px; }
-    }
+    .fade-up { opacity:0; transform:translateY(16px); animation:fadeUp .8s cubic-bezier(.22,1,.36,1) forwards; }
+    .fade-up.delay-1 { animation-delay:.08s; }
+    .fade-up.delay-2 { animation-delay:.16s; }
+    .fade-up.delay-3 { animation-delay:.24s; }
+    .fade-up.delay-4 { animation-delay:.32s; }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .wordmark { letter-spacing:.34em; text-transform:uppercase; font-size:11px; color:#94a3b8; font-weight:600; }
+    .hero-title { font-size:clamp(2.25rem,4vw,4.4rem); line-height:1.04; letter-spacing:-0.04em; font-weight:600; }
+    .hero-copy { color:var(--muted); font-size:clamp(1rem,1.35vw,1.12rem); line-height:1.9; max-width:760px; }
+    .hairline { width:72px; height:1px; background:linear-gradient(90deg,transparent,rgba(15,23,42,.18),transparent); margin:22px auto 0; }
+    .quote { font-size:clamp(1.1rem,1.8vw,1.35rem); line-height:1.9; color:#1e293b; font-weight:400; }
+    .muted { color:var(--muted); }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); background:rgba(255,255,255,.62); border-radius:999px; padding:10px 14px; color:#475569; font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; }
+    .dot { width:7px; height:7px; border-radius:999px; background:#0f172a; opacity:.55; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .card { border-radius:26px; padding:28px; }
+    .card h3 { margin:0 0 10px; font-size:1.08rem; font-weight:600; letter-spacing:-0.02em; }
+    .card p { margin:0; color:var(--muted); line-height:1.8; font-size:.98rem; }
+    .flow { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:18px; }
+    .flow-step { border-radius:24px; padding:26px; position:relative; overflow:hidden; transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease,background .35s ease; }
+    .flow-step.active { transform:translateY(-2px); border-color:rgba(15,23,42,.18); box-shadow:0 16px 36px rgba(15,23,42,.08); background:rgba(255,255,255,.92); }
+    .flow-no { font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:#94a3b8; margin-bottom:16px; font-weight:700; }
+    .flow-title { font-size:1.1rem; font-weight:600; margin-bottom:8px; }
+    .flow-copy { color:var(--muted); line-height:1.8; font-size:.97rem; }
+    .flow-hash { margin-top:18px; font-size:.8rem; color:#64748b; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; word-break:break-all; min-height:42px; transition:color .3s; }
+    .flow-hash.ready { color:#0f172a; }
+    .cta-wrap { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:34px; }
+    .btn-primary,.btn-secondary { border:0; border-radius:999px; padding:14px 22px; font-size:.96rem; font-weight:600; cursor:pointer; transition:transform .25s ease,opacity .25s ease,box-shadow .25s ease,background .25s ease; }
+    .btn-primary { background:#0f172a; color:white; box-shadow:0 10px 25px rgba(15,23,42,.12); }
+    .btn-secondary { background:rgba(255,255,255,.72); color:#334155; border:1px solid var(--line); }
+    .btn-primary:hover,.btn-secondary:hover { transform:translateY(-1px); }
+    .result-box { border-radius:28px; padding:30px; }
+    .result-title { font-size:1.25rem; font-weight:600; letter-spacing:-0.02em; }
+    .result-copy { color:var(--muted); line-height:1.9; margin-top:8px; font-size:1rem; }
+    .seal { margin-top:22px; display:inline-flex; align-items:center; gap:12px; border:1px solid var(--line); background:rgba(255,255,255,.82); border-radius:999px; padding:12px 16px; color:#0f172a; font-size:.92rem; font-weight:600; }
+    .seal-mark { width:11px; height:11px; border-radius:999px; background:#0f172a; box-shadow:0 0 0 8px rgba(15,23,42,.06); }
+    .footer-note { text-align:center; color:#94a3b8; font-size:.92rem; line-height:1.9; margin-top:34px; }
+    .footer-note a { color:#0f172a; font-weight:600; text-decoration:none; transition:opacity .2s; }
+    .footer-note a:hover { opacity:.7; }
+    @media (max-width:900px) { .grid-3,.flow { grid-template-columns:1fr; } .shell { padding:22px 16px 44px; } .card,.flow-step,.result-box { padding:24px; } }
   </style>
 </head>
 <body>
   <main class="shell">
+
     <section class="text-center pt-6 pb-10 fade-up">
       <div class="wordmark">FEAM OS</div>
       <h1 class="hero-title mt-6">Dijital Şahitlik Daveti</h1>
@@ -355,14 +142,12 @@
             <div class="flow-copy">Kişiye özel davet ya da niyet metni hazırlanır.</div>
             <div class="flow-hash" id="docId">Belge kimliği bekleniyor…</div>
           </div>
-
           <div class="glass flow-step" id="step2">
             <div class="flow-no">Adım 02</div>
-            <div class="flow-title">Hash Üretilir</div>
-            <div class="flow-copy">Metnin dijital izi çıkarılır ve kararın özü sabitlenir.</div>
+            <div class="flow-title">SHA-256 Üretilir</div>
+            <div class="flow-copy">Metnin kriptografik parmak izi üretilir. İçerik değişirse iz bozulur.</div>
             <div class="flow-hash" id="docHash">Hash bekleniyor…</div>
           </div>
-
           <div class="glass flow-step" id="step3">
             <div class="flow-no">Adım 03</div>
             <div class="flow-title">WORM Şahitliği</div>
@@ -391,42 +176,39 @@
       Bu bir sunum değildir.
       <br>
       Bu, ticarette güvenin dijital olarak görünür kılınmış halidir.
+      <br><br>
+      Powered by <a href="/vericore/">VeriCore</a> — <a href="/">FEAM.co</a>
     </p>
+
   </main>
 
   <script>
     const playBtn = document.getElementById('playBtn');
     const resetBtn = document.getElementById('resetBtn');
-
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
-
     const docId = document.getElementById('docId');
     const docHash = document.getElementById('docHash');
     const wormHash = document.getElementById('wormHash');
-
     const resultTitle = document.getElementById('resultTitle');
     const resultCopy = document.getElementById('resultCopy');
     const sealBox = document.getElementById('sealBox');
     const sealText = document.getElementById('sealText');
-
     let running = false;
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-    function rnd(size = 10) {
-      return Math.random().toString(16).slice(2, 2 + size).toUpperCase();
-    }
-
-    function fakeHash(prefix) {
-      return `${prefix}${rnd(8)}...${rnd(8)}`;
+    // Real SHA-256 via Web Crypto API
+    async function sha256(message) {
+      const buf = new TextEncoder().encode(message);
+      const hash = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
     }
 
     function clearActive() {
-      [step1, step2, step3].forEach(el => el.classList.remove('active'));
+      [step1,step2,step3].forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.flow-hash').forEach(el => el.classList.remove('ready'));
     }
 
     function resetDemo() {
@@ -445,25 +227,38 @@
       resetDemo();
       running = true;
 
+      const ts = new Date().toISOString();
+      const docIdVal = 'LOI-' + ts.slice(0,10).replace(/-/g,'') + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
+
+      // Step 1: Document created
       step1.classList.add('active');
-      docId.textContent = 'LOI-DXB-2026-' + rnd(4);
+      docId.textContent = docIdVal;
+      docId.classList.add('ready');
       resultTitle.textContent = 'Belge oluştu.';
       resultCopy.textContent = 'Karar, kişiye özel bir davet ve niyet metni olarak görünür hale geldi.';
       await sleep(1100);
       if (!running) return;
 
+      // Step 2: Real SHA-256 hash
+      const payload = JSON.stringify({ doc_id: docIdVal, timestamp: ts, type: 'witness_invitation', content: 'Dijital Şahitlik Daveti' });
+      const hash = await sha256(payload);
       step2.classList.add('active');
-      docHash.textContent = fakeHash('SHA256-');
-      resultTitle.textContent = 'Dijital iz üretildi.';
-      resultCopy.textContent = 'Metnin özü artık sayısal bir parmak izine dönüştü. İçeriğin sonradan sessizce değiştirilmesi mümkün değil.';
+      docHash.textContent = 'sha256:' + hash;
+      docHash.classList.add('ready');
+      resultTitle.textContent = 'Kriptografik iz üretildi.';
+      resultCopy.textContent = 'Metnin özü artık SHA-256 parmak izine dönüştü. İçeriğin sonradan sessizce değiştirilmesi matematiksel olarak imkânsız.';
       await sleep(1200);
       if (!running) return;
 
+      // Step 3: WORM seal (chain hash)
+      const wormPayload = JSON.stringify({ block_hash: hash, sealed_at: new Date().toISOString(), sealed_by: 'vericore_v1.0', protocol: 'E_HAT' });
+      const wormH = await sha256(wormPayload);
       step3.classList.add('active');
-      wormHash.textContent = fakeHash('WORM-');
+      wormHash.textContent = 'worm:' + wormH;
+      wormHash.classList.add('ready');
       resultTitle.textContent = 'Şahitlik tamamlandı.';
       resultCopy.textContent = 'İmza, karar ve kayıt artık birlikte anılır. Sistem sadece çalışmaz; aynı zamanda şahitlik eder.';
-      sealText.textContent = 'Dijital şahitlik oluştu.';
+      sealText.textContent = 'Dijital şahitlik oluştu · ' + ts.slice(0,19).replace('T',' ');
       sealBox.style.display = 'inline-flex';
       running = false;
     }
