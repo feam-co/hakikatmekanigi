@@ -302,6 +302,7 @@
                 <span class="badge badge-success">HIPAA Ready</span>
                 <span class="badge badge-purple">GDPR / KVKK Compliant</span>
                 <span class="badge badge-accent">10K Çağrı Ücretsiz</span>
+                <span class="badge" id="apiBadge" style="background:rgba(16,185,129,0.1);color:var(--success);border:1px solid var(--success);cursor:pointer;" onclick="window.open('https://feam-audit-api-final.onrender.com/docs','_blank')" title="Swagger UI">🟢 API Canlı — Frankfurt EU</span>
             </div>
             <h1>LLM Uygulamanızı<br><span style="-webkit-text-fill-color:var(--accent-light)">Yasal Olarak Koruyun</span></h1>
             <p>PHI/PII sızıntılarını engelleyin, audit trail oluşturun ve mahkemede savunulabilir hale gelin — 3 satır kodla.</p>
@@ -539,17 +540,21 @@ response = client.audit.scan_phi(
                 </div>
                 <div id="tab-curl" class="sdk-content">
                     <div class="install-command">
-                        <code># No installation required</code>
+                        <code># Canlı API — hemen test edin</code>
                     </div>
                     <div class="code-block" style="margin-bottom: 0;">
-<pre><code>curl -X POST https://api.feam.co/v1/audit/scan \
-  -H <span class="string">"Authorization: Bearer sk_test_12345"</span> \
+<pre><code><span class="comment"># PII Maskeleme</span>
+curl -X POST https://feam-audit-api-final.onrender.com/api/v1/mask \
   -H <span class="string">"Content-Type: application/json"</span> \
-  -d '{
-    <span class="string">"text"</span>: <span class="string">"Hasta verisi..."</span>,
-    <span class="string">"redact_mode"</span>: <span class="string">"mask"</span>,
-    <span class="string">"context_id"</span>: <span class="string">"req-8891"</span>
-  }'</code></pre>
+  -d '{<span class="string">"text"</span>:<span class="string">"Hasta Ahmet, TC: 12345678901"</span>}'
+
+<span class="comment"># Tam Audit Pipeline</span>
+curl -X POST https://feam-audit-api-final.onrender.com/api/v1/audit \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d '{<span class="string">"input"</span>:<span class="string">"Bu yatırım kesinlikle risksizdir."</span>,<span class="string">"mission"</span>:<span class="string">"audit"</span>}'
+
+<span class="comment"># Zincir Doğrulama</span>
+curl https://feam-audit-api-final.onrender.com/api/v1/verify</code></pre>
                     </div>
                 </div>
             </div>
@@ -641,13 +646,37 @@ response = client.audit.scan_phi(
     </div>
 
     <script>
-        // ---- Live Demo (Real SHA-256) ----
+        // ---- Config ----
+        const API_BASE = 'https://feam-audit-api-final.onrender.com';
+
+        // ---- Live API Status Check ----
+        (async function checkAPI() {
+            const badge = document.getElementById('apiBadge');
+            try {
+                const ctrl = new AbortController();
+                setTimeout(() => ctrl.abort(), 5000);
+                const r = await fetch(API_BASE + '/health', { signal: ctrl.signal });
+                const d = await r.json();
+                if (d.status === 'ok') {
+                    badge.textContent = '🟢 API Canlı — v' + d.version;
+                    badge.style.color = 'var(--success)';
+                    badge.style.borderColor = 'var(--success)';
+                }
+            } catch(e) {
+                badge.textContent = '🟡 API Uyandırılıyor...';
+                badge.style.color = 'var(--warning)';
+                badge.style.borderColor = 'var(--warning)';
+            }
+        })();
+
+        // ---- Client-side SHA-256 (fallback) ----
         async function sha256(msg) {
             const buf = new TextEncoder().encode(msg);
             const hash = await crypto.subtle.digest('SHA-256', buf);
             return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
         }
 
+        // Client-side patterns for fallback
         const PHI_PATTERNS = [
             { name: 'TCKN', regex: /\b\d{11}\b/g },
             { name: 'NAME', regex: /\b[A-ZÇĞİÖŞÜ][a-zçğıöşü]+ [A-ZÇĞİÖŞÜ][a-zçğıöşü]+\b/g },
@@ -659,11 +688,43 @@ response = client.audit.scan_phi(
         async function runDemoScan() {
             const input = document.getElementById('demoInput').value;
             if (!input.trim()) return;
-
             const t0 = performance.now();
+
+            try {
+                // Try live API first
+                const ctrl = new AbortController();
+                setTimeout(() => ctrl.abort(), 8000);
+                const resp = await fetch(API_BASE + '/api/v1/mask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: input, redact_mode: 'mask' }),
+                    signal: ctrl.signal
+                });
+                const data = await resp.json();
+                const elapsed = (performance.now() - t0).toFixed(1);
+
+                const risk = data.risk_score || 0;
+                document.getElementById('demoTimer').textContent = `⚡ ${elapsed}ms (canlı API)`;
+                document.getElementById('demoRisk').textContent = (risk * 100).toFixed(0) + '%';
+                document.getElementById('demoRisk').style.color = risk > 0.7 ? 'var(--danger)' : risk > 0 ? 'var(--warning)' : 'var(--success)';
+                const bar = document.getElementById('demoRiskBar');
+                bar.style.width = (risk * 100) + '%';
+                bar.style.background = risk > 0.7 ? 'var(--danger)' : risk > 0 ? 'var(--warning)' : 'var(--success)';
+                document.getElementById('demoViolations').textContent = data.violations && data.violations.length > 0
+                    ? data.violations.map(v => v.type + ': ' + (v.original || '')).join(' | ')
+                    : 'Temiz ✅';
+                document.getElementById('demoClean').textContent = data.clean_text || input;
+                document.getElementById('demoHash').textContent = 'worm:' + (data.worm_receipt || 'N/A');
+                document.getElementById('demoResult').classList.add('show');
+                return;
+            } catch(e) {
+                // Fallback to client-side
+                console.log('API unreachable, using client-side fallback');
+            }
+
+            // Client-side fallback
             const violations = [];
             let masked = input;
-
             for (const p of PHI_PATTERNS) {
                 const matches = input.matchAll(p.regex);
                 for (const m of matches) {
@@ -671,14 +732,12 @@ response = client.audit.scan_phi(
                     masked = masked.replace(m[0], `[${p.name}]`);
                 }
             }
-
             const risk = violations.length > 0 ?
                 Math.min(1.0, violations.some(v => v.type === 'TCKN' || v.type === 'MRN') ? 1.0 : 0.5) : 0.0;
-
             const hash = await sha256(JSON.stringify({ input: masked, violations, ts: Date.now() }));
             const elapsed = (performance.now() - t0).toFixed(1);
 
-            document.getElementById('demoTimer').textContent = `⚡ ${elapsed}ms`;
+            document.getElementById('demoTimer').textContent = `⚡ ${elapsed}ms (yerel)`;
             document.getElementById('demoRisk').textContent = (risk * 100).toFixed(0) + '%';
             document.getElementById('demoRisk').style.color = risk > 0.7 ? 'var(--danger)' : risk > 0 ? 'var(--warning)' : 'var(--success)';
             const bar = document.getElementById('demoRiskBar');

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriCore Technical Brief — FEAM.co</title>
+<style>
+@page { size: A4; margin: 18mm 20mm; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; font-size: 10.5pt; line-height: 1.65; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 18mm 22mm; position: relative; page-break-after: always; }
+@media screen { .page { box-shadow: 0 2px 20px rgba(0,0,0,.08); margin: 20px auto; } }
+@media print { body { background: #fff; } .page { margin: 0; box-shadow: none; width: 100%; } .no-print { display: none !important; } }
+
+/* Header */
+.header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5px solid #0f172a; padding-bottom: 12px; margin-bottom: 20px; }
+.logo { font-size: 20pt; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; }
+.logo span { color: #7c5cfc; }
+.doc-meta { text-align: right; font-size: 8pt; color: #64748b; line-height: 1.5; }
+.badge { display: inline-block; background: #eff6ff; border: 1.5px solid #3b82f6; color: #1d4ed8; padding: 3px 10px; border-radius: 4px; font-size: 7pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Content */
+h1 { font-size: 18pt; font-weight: 800; color: #0f172a; margin: 16px 0 6px; letter-spacing: -0.5px; }
+h2 { font-size: 11pt; font-weight: 700; color: #0f172a; margin: 18px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
+h3 { font-size: 10pt; font-weight: 700; margin: 10px 0 4px; }
+p { margin-bottom: 8px; color: #334155; }
+.subtitle { font-size: 11pt; color: #64748b; margin-bottom: 16px; }
+
+/* Architecture diagram */
+.arch-box { background: #0f172a; border-radius: 8px; padding: 16px 18px; margin: 12px 0; font-family: 'Consolas', 'Courier New', monospace; font-size: 8.5pt; line-height: 1.7; color: #e2e8f0; }
+.arch-box .green { color: #86efac; }
+.arch-box .amber { color: #fbbf24; }
+.arch-box .red { color: #fca5a5; }
+.arch-box .blue { color: #93c5fd; }
+.arch-box .dim { color: #64748b; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 9pt; }
+th { text-align: left; padding: 6px 8px; background: #f1f5f9; font-weight: 700; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; border-bottom: 2px solid #cbd5e1; }
+td { padding: 5px 8px; border-bottom: 1px solid #e2e8f0; color: #334155; }
+tr:last-child td { border-bottom: none; }
+
+/* Columns */
+.cols { display: flex; gap: 16px; }
+.col { flex: 1; }
+
+/* Tags */
+.tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 7pt; font-weight: 700; }
+.tag-g { background: #dcfce7; color: #166534; }
+.tag-b { background: #dbeafe; color: #1e40af; }
+.tag-a { background: #fef3c7; color: #92400e; }
+
+/* Footer */
+.page-footer { position: absolute; bottom: 18mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; font-size: 7pt; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 6px; }
+
+/* Emphasis box */
+.callout { background: #f0f9ff; border-left: 3px solid #3b82f6; padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; }
+.callout p { margin: 0; font-size: 9.5pt; }
+
+/* Print button */
+.print-btn { position: fixed; bottom: 20px; right: 20px; background: #7c5cfc; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 11pt; box-shadow: 0 4px 12px rgba(124,92,252,.3); z-index: 100; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="logo">FEAM<span>.co</span> | VeriCore</div>
+      <div style="font-size:8pt; color:#64748b; margin-top:2px;">Technical Architecture Brief — Horizon Europe CL4-2026</div>
+    </div>
+    <div class="doc-meta">
+      <div class="badge">Confidential — Partner Review</div><br>
+      Version 1.0 — April 2026<br>
+      Patent: TR 2024 121973
+    </div>
+  </div>
+
+  <h1>VeriCore: Deterministic Compliance Layer for AI Systems</h1>
+  <p class="subtitle">A cryptographic audit infrastructure that makes every AI decision traceable, verifiable, and EU AI Act defensible.</p>
+
+  <h2>1. System Overview</h2>
+  <p>VeriCore is a <strong>deterministic governance engine</strong> that intercepts AI decisions in real-time, evaluates them against configurable compliance rules, and seals every verdict into a tamper-evident cryptographic chain. Unlike probabilistic LLM guardrails, VeriCore uses a mathematical scoring model with hard binary gates — no AI is used in the decision loop itself.</p>
+
+  <div class="callout">
+    <p><strong>Key Differentiator:</strong> The LLM serves as <em>advisor only</em>. The rule engine is the sole authority. This architectural wall (enforced via Pydantic <code>extra="forbid"</code>) satisfies EU AI Act Article 14 human oversight requirements by design.</p>
+  </div>
+
+  <h2>2. Architecture</h2>
+  <div class="arch-box">
+<span class="dim">Input</span> → <span class="blue">[PII Scanner]</span> → <span class="amber">[Risk Classifier]</span> → <span class="red">[Hard Gates]</span> → <span class="green">[5-Axis Sigma]</span> → <span class="green">[Verdict]</span> → <span class="blue">[Witness Seal]</span>
+              │                    │                  │                  │                │
+              └ TCKN/SSN/IBAN      └ Keyword-based     └ Binary           └ Weighted        └ SHA-256
+                Email/Phone/MRN      risk level          pass/fail          composite         chain append
+                ICD-10 codes                              (σ < τ → REJECT)   score (0-1)       (WORM)
+  </div>
+
+  <h2>3. Core Components</h2>
+  <div class="cols">
+    <div class="col">
+      <h3>🔒 GOVERNOR Kernel</h3>
+      <p>Deterministic rule engine with configurable thresholds per risk class (LOW → CRITICAL). Computes a composite Sigma score from 5 ethical-operational axes.</p>
+
+      <h3>⛔ Hard-Gate Interceptor</h3>
+      <p>Binary safety checks (PII detection, malicious patterns, contract violations) that override Sigma scoring. If any gate fires, the decision is <strong>REJECTED</strong> regardless of score.</p>
+    </div>
+    <div class="col">
+      <h3>🔐 Witness Chain</h3>
+      <p>SHA-256 cryptographic ledger. Each block references the previous block's hash, creating a tamper-evident, append-only chain. Independently verifiable via <code>/api/v1/verify</code>.</p>
+
+      <h3>🛡️ PII Masking Layer</h3>
+      <p>Isolated endpoint that detects and redacts 8 PII/PHI pattern categories before data enters any third-party context window.</p>
+    </div>
+  </div>
+
+  <h2>4. Sigma Scoring Engine — 5-Axis Model</h2>
+  <table>
+    <thead><tr><th>Axis</th><th>Weight</th><th>EU AI Act Reference</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Benefit</strong> (fayda)</td><td>28%</td><td>Art. 9 — Risk Mgmt</td><td>Value delivered to user/system</td></tr>
+      <tr><td><strong>Transparency</strong> (şeffaflık)</td><td>22%</td><td>Art. 13 — Transparency</td><td>Decision explainability</td></tr>
+      <tr><td><strong>Compliance</strong> (sözleşme)</td><td>20%</td><td>Art. 9 — RM System</td><td>Contract/legal adherence</td></tr>
+      <tr><td><strong>Resilience</strong> (mücbir sebep)</td><td>18%</td><td>Art. 15 — Robustness</td><td>Safe execution capacity</td></tr>
+      <tr><td><strong>Waste</strong> (israf)</td><td>12%</td><td>—</td><td>Resource waste (inverted)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Decision Bands (risk-class dependent)</h3>
+  <table>
+    <thead><tr><th>Risk Class</th><th>APPROVED (σ ≥)</th><th>ESCALATE (σ ≥)</th><th>REJECTED (σ &lt;)</th></tr></thead>
+    <tbody>
+      <tr><td>LOW</td><td>0.60</td><td>0.35</td><td>&lt; 0.35</td></tr>
+      <tr><td>MEDIUM</td><td>0.68</td><td>0.42</td><td>&lt; 0.42</td></tr>
+      <tr><td>HIGH</td><td>0.75</td><td>0.50</td><td>&lt; 0.50</td></tr>
+      <tr><td>CRITICAL</td><td>0.82</td><td>0.60</td><td>&lt; 0.60</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>FEAM.co — Confidential Technical Brief v1.0</span>
+    <span>Page 1 / 2</span>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="logo">FEAM<span>.co</span> | VeriCore</div>
+      <div style="font-size:8pt; color:#64748b; margin-top:2px;">API Specification & Collaboration Proposal</div>
+    </div>
+    <div class="doc-meta">
+      <div class="badge">TRL 4 — Working Prototype</div>
+    </div>
+  </div>
+
+  <h2>5. Witness Chain — Cryptographic Structure</h2>
+  <div class="arch-box">
+<span class="dim">Genesis Block (index: 0)</span>
+<span class="green">  hash: 1f04a680a1bd9448c5d9a488fe26e56ce21eb934217f9e8539b5299304603039</span>
+  prev: 0000000000000000000000000000000000000000000000000000000000000000
+  data: {"engine":"FEAM GOVERNOR v1.2.1","patent":"TR 2024 121973"}
+
+<span class="dim">Block N</span>
+<span class="green">  hash    = SHA-256( JSON.stringify({ index, timestamp, event, data, prev_hash }) )</span>
+  prev    = Block[N-1].hash
+  event   = "AUDIT:APPROVED" | "AUDIT:REJECTED" | "AUDIT:ESCALATE" | "MASK_SCAN"
+  </div>
+
+  <div class="callout">
+    <p><strong>Verification:</strong> The <code>/api/v1/verify</code> endpoint recomputes every hash from Genesis to HEAD without requiring any internal system access. Any single-bit tampering breaks the chain — result: <code>"integrity": "COMPROMISED"</code>.</p>
+  </div>
+
+  <h2>6. Live API Endpoints (Frankfurt EU Region)</h2>
+  <table>
+    <thead><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Latency</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-g">GET</span></td><td><code>/</code></td><td>Service status + genesis hash</td><td>&lt;5ms</td></tr>
+      <tr><td><span class="tag tag-g">GET</span></td><td><code>/api/v1/genesis</code></td><td>Constitutional genesis block</td><td>&lt;5ms</td></tr>
+      <tr><td><span class="tag tag-a">POST</span></td><td><code>/api/v1/audit</code></td><td>Full audit pipeline (PII → Sigma → Seal)</td><td>&lt;10ms</td></tr>
+      <tr><td><span class="tag tag-a">POST</span></td><td><code>/api/v1/mask</code></td><td>PII/PHI detection and masking</td><td>&lt;5ms</td></tr>
+      <tr><td><span class="tag tag-g">GET</span></td><td><code>/api/v1/chain</code></td><td>Full audit chain (last 100 blocks)</td><td>&lt;10ms</td></tr>
+      <tr><td><span class="tag tag-b">GET</span></td><td><code>/api/v1/verify</code></td><td>Independent chain integrity check</td><td>&lt;50ms</td></tr>
+      <tr><td><span class="tag tag-g">GET</span></td><td><code>/docs</code></td><td>Interactive Swagger UI</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:8.5pt; color:#64748b;">Live endpoint: <strong>https://feam-audit-api-final.onrender.com</strong> — Source: <strong>github.com/feam-co/audit-api</strong> (public)</p>
+
+  <h2>7. EU AI Act Compliance Mapping</h2>
+  <table>
+    <thead><tr><th>EU AI Act Article</th><th>Requirement</th><th>VeriCore Implementation</th></tr></thead>
+    <tbody>
+      <tr><td>Art. 9</td><td>Risk Management</td><td>5-axis Sigma with risk-class thresholds</td></tr>
+      <tr><td>Art. 12</td><td>Record-Keeping</td><td>SHA-256 WORM chain — append-only</td></tr>
+      <tr><td>Art. 13</td><td>Transparency</td><td>Full decision breakdown in every response</td></tr>
+      <tr><td>Art. 14</td><td>Human Oversight</td><td>ESCALATE verdict → human review queue</td></tr>
+      <tr><td>Art. 15</td><td>Accuracy & Robustness</td><td>Deterministic rules, no probabilistic drift</td></tr>
+      <tr><td>GDPR/KVKK</td><td>Data Protection</td><td>Zero PII storage — only hashes retained</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8. Fraunhofer AISEC — Collaboration Opportunity</h2>
+  <p>We have built the TRL 4 foundation. We seek Fraunhofer AISEC's expertise to elevate this to TRL 6/7 through:</p>
+  <table>
+    <thead><tr><th>Area</th><th>Current State</th><th>AISEC Contribution (WP3)</th></tr></thead>
+    <tbody>
+      <tr><td>Hash Algorithm</td><td>SHA-256</td><td>Post-quantum migration (CRYSTALS-Dilithium)</td></tr>
+      <tr><td>Chain Verification</td><td>Single-node, in-memory</td><td>Multi-party validation, distributed witnessing</td></tr>
+      <tr><td>Adversarial Testing</td><td>Functional tests only</td><td>Red-team attack simulation, formal verification</td></tr>
+      <tr><td>Storage</td><td>In-memory (volatile)</td><td>Persistent WORM with cryptographic attestation</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <p><strong>Proposed Role:</strong> Fraunhofer AISEC as <strong>WP3 Lead — Cryptographic Security & Verification</strong> in a Horizon Europe CL4-2026 consortium. Full technical ownership of the Witness Chain hardening and formal verification workpackage.</p>
+  </div>
+
+  <div style="margin-top:20px; text-align:center; padding:14px; background:#f8fafc; border-radius:8px; border: 1px solid #e2e8f0;">
+    <p style="font-size:9pt; margin:0;"><strong>Contact:</strong> Erdem Özcan — erdem@feam.co | <strong>Patent:</strong> TR 2024 121973 (Class 42)</p>
+    <p style="font-size:8pt; color:#64748b; margin:4px 0 0;">© 2026 FEAM.co · 5E Yapı Sistemleri Yönetimi Ltd. Şti. · Teknopark İstanbul</p>
+  </div>
+
+  <div class="page-footer">
+    <span>FEAM.co — Confidential Technical Brief v1.0</span>
+    <span>Page 2 / 2</span>
+  </div>
+</div>
+
+</body>
+</html>
