@@ -13,11 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Deploy via FTP to Natro
+    - name: Deploy via FTPS to Natro
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        protocol: ftps
         server-dir: /
         local-dir: ./site/
+        timeout: 60000
