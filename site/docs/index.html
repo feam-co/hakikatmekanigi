@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation — FEAM.co</title>
+<meta name="description" content="Technical documentation for VeriCore — API reference, Technical Brief, compliance mapping, and source code.">
+<link rel="canonical" href="https://feam.co/docs/" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030712;--surface:rgba(15,23,42,0.7);--border:rgba(148,163,184,0.1);--text:#f1f5f9;--text-2:#94a3b8;--text-3:#64748b;--cyan:#06b6d4;--emerald:#10b981;--violet:#8b5cf6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,56px);background:rgba(3,7,18,0.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--emerald));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#030712}
+.nav-brand{font-weight:800;font-size:18px;color:var(--text)}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text-3);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--cyan),var(--emerald));color:#030712!important;padding:8px 20px;border-radius:8px;font-weight:700!important;font-size:13px!important}
+
+.container{max-width:900px;margin:0 auto;padding:100px 24px 60px}
+h1{font-size:36px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.subtitle{color:var(--text-2);font-size:16px;margin-bottom:48px}
+
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:640px){.doc-grid{grid-template-columns:1fr}}
+
+.doc-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s;text-decoration:none;color:inherit;display:block}
+.doc-card:hover{border-color:rgba(6,182,212,0.3);transform:translateY(-2px);box-shadow:0 8px 32px rgba(6,182,212,0.08)}
+.doc-icon{font-size:28px;margin-bottom:14px}
+.doc-card h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.doc-card p{color:var(--text-3);font-size:14px;line-height:1.6}
+.doc-tag{display:inline-block;margin-top:12px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.tag-live{background:rgba(16,185,129,0.15);color:var(--emerald)}
+.tag-pdf{background:rgba(139,92,246,0.15);color:var(--violet)}
+.tag-code{background:rgba(6,182,212,0.15);color:var(--cyan)}
+
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
+.footer-links{display:flex;gap:24px;justify-content:center;margin-bottom:12px}
+.footer-links a{color:var(--text-3);text-decoration:none;font-size:13px}
+.footer-links a:hover{color:var(--text-2)}
+.footer-copy{color:var(--text-3);font-size:12px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-mark">F</div>
+    <div class="nav-brand">FEAM<span>.co</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="/vericore/">VeriCore</a>
+    <a href="/demo/">Demo</a>
+    <a href="/docs/" class="active">Docs</a>
+    <a href="mailto:erdem@feam.co" class="nav-cta">Partner With Us</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Documentation</h1>
+  <p class="subtitle">Technical resources for developers, auditors, and research partners.</p>
+
+  <div class="doc-grid">
+    <a href="https://feam-audit-api-final.onrender.com/docs" target="_blank" class="doc-card">
+      <div class="doc-icon">⚡</div>
+      <h3>API Reference (Swagger)</h3>
+      <p>Interactive API documentation. Test endpoints live — audit, mask, verify, chain.</p>
+      <span class="doc-tag tag-live">Live — Frankfurt EU</span>
+    </a>
+
+    <a href="/docs/technical-brief.html" class="doc-card">
+      <div class="doc-icon">📄</div>
+      <h3>Technical Brief</h3>
+      <p>2-page architecture overview. 5-axis Sigma scoring, Witness Chain, EU AI Act mapping.</p>
+      <span class="doc-tag tag-pdf">PDF Ready</span>
+    </a>
+
+    <a href="https://github.com/feam-co/audit-api" target="_blank" class="doc-card">
+      <div class="doc-icon">🔓</div>
+      <h3>Source Code</h3>
+      <p>Public GitHub repository. GOVERNOR Kernel, FastAPI, full audit pipeline.</p>
+      <span class="doc-tag tag-code">Open Source</span>
+    </a>
+
+    <a href="/vericore/#compliance" class="doc-card">
+      <div class="doc-icon">🇪🇺</div>
+      <h3>EU AI Act Compliance</h3>
+      <p>Article-by-article mapping. How VeriCore satisfies Articles 9, 12, 13, 14, 15.</p>
+      <span class="doc-tag tag-pdf">Regulatory</span>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/vericore/">VeriCore</a>
+    <a href="/demo/">Demo</a>
+    <a href="/docs/">Docs</a>
+    <a href="https://github.com/feam-co">GitHub</a>
+    <a href="mailto:erdem@feam.co">Contact</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 FEAM.co &mdash; 5E Yapı Sistemleri Yönetimi Ltd. Şti.</div>
+</footer>
+
+</body>
+</html>
