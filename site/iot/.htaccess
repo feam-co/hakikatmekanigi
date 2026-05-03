@@ -1,0 +1,8 @@
+# JSON dosyalarına doğrudan erişimi engelle
+<Files "*.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# PHP dosyaları normal çalışır
+Options -Indexes
