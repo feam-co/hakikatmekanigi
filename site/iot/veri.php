@@ -35,11 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $record = [
         'ts'       => date('c'),
-        'device'   => $body['device']  ?? 'esp32',
-        'temp'     => $body['temp']    ?? null,
-        'humidity' => $body['humidity'] ?? null,
-        'status'   => $body['status']  ?? null,
-        'extra'    => $body['extra']   ?? null,
+        'device'   => $body['device']   ?? 'esp32',
+        'status'   => $body['status']   ?? null,
+        'message'  => $body['message']  ?? null,
+        'servo'    => isset($body['servo'])    ? (int)$body['servo']    : null,
+        'rssi'     => isset($body['rssi'])     ? (int)$body['rssi']     : null,
+        'ram'      => isset($body['ram'])      ? (int)$body['ram']      : null,
+        'ip'       => $body['ip']       ?? null,
+        'temp'     => isset($body['temp'])     ? (float)$body['temp']   : null,
+        'humidity' => isset($body['humidity']) ? (float)$body['humidity']: null,
+        'extra'    => $body['extra']    ?? null,
     ];
 
     $fp = fopen(DATA_FILE, 'c+');
